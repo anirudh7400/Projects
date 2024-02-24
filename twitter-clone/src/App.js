@@ -2,6 +2,8 @@ import './App.css';
 import Firstpage from './Components/Firstpage/Firstpage'
 import Signup from './Components/Signup/Signup'
 import Login from './Components/Login/Login'
+import Home from './Components/Home/Home'
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,6 +24,11 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+    errorElement: <h2>404 error</h2>
+  },
+  {
+    path: '/home',
+    element: <Home />,
     errorElement: <h2>404 error</h2>
   }
 ])

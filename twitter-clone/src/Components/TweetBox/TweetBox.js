@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
-import './TweetBox.css'
 import { Avatar, Button } from '@mui/material';
+import styles from './TweetBox.module.css'
 
 function TweetBox() {
     const [tweetMessage, setTweetMessage] = useState("");
@@ -9,11 +9,12 @@ function TweetBox() {
   
 
     return (
-        <div className = "tweetBox">
-            <form>
-                <div className = "tweetBox__input">
+        <div className = {styles.tweetBox}>
+            <form className={styles.tweetBoxForm}>
+                <div className = {styles.tweetBox__input}>
                     <Avatar />
                     <input 
+                        className={styles.tweetBoxInput}
                         onChange = {(e) => setTweetMessage(e.target.value)}
                         value = {tweetMessage} 
                         placeholder = "What's happening" 
@@ -23,7 +24,7 @@ function TweetBox() {
                 
                 <Button 
              
-                className = "tweetBox__tweetButton">Tweet</Button>
+                className = {styles.tweetBox__tweetButton}>Tweet</Button>
                 
                 
             </form>
