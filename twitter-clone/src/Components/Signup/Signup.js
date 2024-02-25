@@ -8,6 +8,8 @@ const  Signup = () => {
 
   const navigate = useNavigate();
 
+  const [fetchdata,setFetchData] = useState("")
+
   const [data,setData] = useState({
 
     userName: '',
@@ -26,8 +28,15 @@ const  Signup = () => {
   const signUp = (userData) => {
       axios.post('http://localhost:8080/addUser',userData).then(
         (resp) => {
-          console.log(resp)
-          navigate('/home')
+          setFetchData(resp.data)
+          if(fetchdata === "success"){
+            navigate('/home')
+            console.log("success")
+          }
+          else{
+            console.log("error")
+          }
+         
         }
       ).catch((err) => {
         console.log(err)

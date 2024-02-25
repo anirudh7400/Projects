@@ -4,4 +4,6 @@ body {
     overflow: hidden;
   }
   
-  
+  .active {
+    background-color: var(--twitter-color);
+  }

@@ -19,7 +19,6 @@ function Sidebar() {
            <XIcon
               className = "sidebar__twitterIcon"                
            /> 
-
            <SidebarOption active
               Icon = {HomeIcon}
               text = "Home"  
@@ -30,7 +29,7 @@ function Sidebar() {
            />
            <SidebarOption 
               Icon = {NotificationsNoneIcon}
-              text = "Notifications"  
+              text = "Notification"  
            />
            <SidebarOption 
               Icon = {MailOutlineIcon}
@@ -38,11 +37,11 @@ function Sidebar() {
            />
            <SidebarOption 
               Icon = {BookmarkBorderIcon}
-              text = "Bookmarks"  
+              text = "Bookmark"  
            />
            <SidebarOption
               Icon = {ListIcon} 
-              text = "Lists"  
+              text = "List"  
            />
            <SidebarOption 
               Icon = {PermIdentityIcon}
