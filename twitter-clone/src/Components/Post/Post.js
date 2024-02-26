@@ -1,7 +1,6 @@
 import { Avatar } from '@mui/material';
 import  PublishIcon  from '@mui/icons-material/Publish'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import RepeatIcon from '@mui/icons-material/Repeat'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import React, {forwardRef} from 'react'
@@ -9,11 +8,8 @@ import './Post.css'
 
 const  Post = forwardRef(
     ({
-        displayName,
-        username,
-        verified, 
-        text, 
-        image, 
+        username, 
+        text,  
         avatar
 }, ref) => {
     return (
@@ -27,21 +23,14 @@ const  Post = forwardRef(
                 <div className = "post__header">
                     <div className = "post__headerText">
                     <h3>
-                        {displayName}
-                            <span className = "post__headerSpecial">
-                                {verified && <VerifiedUserIcon className = "post__badge" />}
-                                @{username}
-                            </span>
+                        {username}
                     </h3>
                     </div>
                     <div className = "post__headerDescription">
                         <p>{text}</p>
                     </div>
                 </div>
-                <img 
-                    src = {image}
-                    alt = ""
-                />
+               
                 <div className = "post__footer">
                     <ChatBubbleOutlineIcon fontSize = "small" /> 
                     <RepeatIcon fontSize = "small" />

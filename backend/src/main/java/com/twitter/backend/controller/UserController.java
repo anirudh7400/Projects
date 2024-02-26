@@ -1,9 +1,14 @@
 package com.twitter.backend.controller;
 
+import com.twitter.backend.exception.EmailNotFoundException;
+import com.twitter.backend.exception.SameUserAlreadyExist;
 import com.twitter.backend.model.User;
+import com.twitter.backend.model.UserData;
 import com.twitter.backend.repository.UserRepository;
 import com.twitter.backend.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,40 +19,28 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/addUser")
-    public String addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody UserData userData) throws SameUserAlreadyExist {
 
-        String tempEmail = user.getEmail();
-        User temp = userRepository.findByEmail(tempEmail);
+        return new ResponseEntity<>(userServiceImpl.createUser(userData),HttpStatus.OK);
 
+    }
+    @GetMapping("/getUser/{email}/{password}")
+    public ResponseEntity<User> getUser(@PathVariable String email, @PathVariable String password) throws EmailNotFoundException {
 
+        return new ResponseEntity<>(userServiceImpl.findUser(email,password), HttpStatus.OK);
 
-        if(temp != null && temp.getEmail() == tempEmail){
-            return "error";
-        }
-
-        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-        userServiceImpl.createUser(user);
-
-        return "success";
     }
 
-    @PostMapping("/getUser")
-    public String getUser(@RequestBody User user){
+    @PutMapping("/updateUser/{email}")
+    public ResponseEntity<User> updateUser(@PathVariable String email,@RequestBody String tweet){
 
-        String tempEmail = user.getEmail();
-        User temp = userRepository.findByEmail(tempEmail);
-        if(temp != null && bCryptPasswordEncoder.matches(user.getPassword(),temp.getPassword())){
-            return "success";
-        }
+        User user = userServiceImpl.updateUser(email, tweet);
 
-
-        return "error";
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 }

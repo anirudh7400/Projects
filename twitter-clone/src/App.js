@@ -9,12 +9,19 @@ import Notification from './Components/Notification/Notification'
 import List from './Components/List/List';
 import Message from './Components/Message/Message'
 import Profile from './Components/Profile/Profile'
+import More from './Components/More/More'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createContext } from 'react';
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { useState } from 'react';
 
+
+export const Context = createContext(undefined);
 
 
 
@@ -69,15 +76,25 @@ const router = createBrowserRouter([
     element: <Message />,
     errorElement: <h2>404 error</h2>
   },
+  {
+    path: '/More',
+    element: <More />,
+    errorElement: <h2>404 error</h2>
+  }
 ])
 
 function App() {
 
+  const[email,setEmail] = useState('');
+
   return (
     <div className="app">
+
+      <Context.Provider value={[email,setEmail]}>
+      <ToastContainer position='top-center'/>
       
      <RouterProvider router={router} />
-
+     </Context.Provider>
     </div>
   );
 }

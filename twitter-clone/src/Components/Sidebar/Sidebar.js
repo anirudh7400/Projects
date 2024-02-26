@@ -53,6 +53,10 @@ function Sidebar() {
            />
            
            <Button variant = "outlined" className = "sidebar__tweet">Tweet</Button>
+
+           <Button variant='outlined' className='sidebar_logout' 
+           
+           >Logout</Button>
         </div>
     )
 }

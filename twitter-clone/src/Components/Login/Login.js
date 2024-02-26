@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect ,useState } from 'react'
 import styles from  './Login.module.css'
 import axios from 'axios' 
 import { useNavigate } from 'react-router'
+import {toast} from 'react-toastify'
+import { Context } from '../../App';
+
 
 const Login = () => {
 
+  const[email,setEmail] = useContext(Context);
+
   const navigate = useNavigate();
 
-  const [fetchdata,setFetchData] = useState("")
+    const [data,setData] = useState({
 
-  const [data,setData] = useState({
-
-    userName: '',
     email: '',
     password: ''
 
@@ -25,20 +27,23 @@ const Login = () => {
   }
 
   const signIn = (userData) => {
-      axios.post('http://localhost:8080/getUser',userData).then(
+      axios.get('http://localhost:8080/getUser/'+ userData.email +'/'+ userData.password).then(
         (resp) => {
-          setFetchData(resp.data)
-          if(fetchdata === "success"){
+          console.log(resp)
+          if(resp.status == 200){
+            setEmail(userData.email)
             navigate('/home')
-            console.log("success")
+            toast.success("User registered successfully !!")       
           }
-          else{
-            console.log("error")
-          }
-         
+                
         }
       ).catch((err) => {
         console.log(err)
+        toast.error("Invalid credentials !!")
+        setData({
+          email: '',
+          password: ''
+        })
       })
   }
 
@@ -63,7 +68,6 @@ const Login = () => {
       error.password = "Password should be less than 10 characters";
     }
 
-    setIsSubmit(true);
     return error;
   }
 
@@ -71,13 +75,21 @@ const Login = () => {
   const submitForm = (e) => {
     e.preventDefault();
     setFormError(validate(data));
-
-    if(isSubmit) {
-      signIn(data);
-    }
-
+    setIsSubmit(true);
   }
 
+  
+  useEffect( () => {
+
+    console.log(formError)
+    if(Object.keys(formError).length === 0 && isSubmit){
+      signIn(data)
+    }
+    else{
+      setIsSubmit(false)
+    }
+
+  },[formError])
 
 
 

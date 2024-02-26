@@ -14,20 +14,22 @@ function Feed() {
             </div>
 
             <TweetBox />
-            
-            <FlipMove>
+
+            <Post 
+            username = 'tom'
+            text = "hello world"
+            avatar = 'https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584_1280.png'
+            />            
+            {/* <FlipMove>
                 {posts.map(post => (
                 <Post 
                 key = {post.text}
-                displayName = {post.displayName}
                 username = {post.username}
-                verified = {post.verified}
                 text = {post.text}
-                image = {post.image}
-                avatar = {post.avatar}
+                avatar = 'https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584_1280.png'
             />
             ))}
-            </FlipMove>   
+            </FlipMove>    */}
         </div>
     )
 }

@@ -1,22 +1,14 @@
 package com.twitter.backend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "build")
-public class User {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class UserData {
 
     private String userName;
 
@@ -24,7 +16,4 @@ public class User {
     private String email;
 
     private String password;
-
-    private List<String> tweet;
-
 }

@@ -16,6 +16,7 @@ const Profile = () => {
       </div>
         
         <Widgets />
+        
     </div>
   )
 }

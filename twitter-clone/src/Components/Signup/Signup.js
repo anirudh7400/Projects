@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Signup.module.css'
 import axios from 'axios' 
 import { useNavigate } from 'react-router'
-
+import {toast} from 'react-toastify'
 
 const  Signup = () => {
 
   const navigate = useNavigate();
-
-  const [fetchdata,setFetchData] = useState("")
 
   const [data,setData] = useState({
 
@@ -20,6 +18,7 @@ const  Signup = () => {
 
   const [formError,setFormError] = useState({})
   const [isSubmit,setIsSubmit] = useState(false)
+  
 
   const handleChange = (e,field) => {
     setData({...data,[field]:e.target.value})
@@ -28,18 +27,21 @@ const  Signup = () => {
   const signUp = (userData) => {
       axios.post('http://localhost:8080/addUser',userData).then(
         (resp) => {
-          setFetchData(resp.data)
-          if(fetchdata === "success"){
-            navigate('/home')
-            console.log("success")
+          if(resp.status === 200){
+            console.log(resp)
+            navigate('/login')
+            toast.success("User registered successfully !!")       
           }
-          else{
-            console.log("error")
-          }
-         
+           
         }
-      ).catch((err) => {
-        console.log(err)
+      ).catch((er) => {
+        console.log(er)
+        toast.error("Email already taken !!")     
+        setData({
+          userName: '',
+          email: '',
+          password: ''
+        })
       })
   }
 
@@ -67,8 +69,7 @@ const  Signup = () => {
     else if(values.password.length > 10){
       error.password = "Password should be less than 10 characters";
     }
-
-    setIsSubmit(true);
+    
     return error;
   }
 
@@ -76,12 +77,20 @@ const  Signup = () => {
   const submitForm = (e) => {
     e.preventDefault();
     setFormError(validate(data));
+    setIsSubmit(true);
+  }
 
-    if(isSubmit) {
-      signUp(data);
+  useEffect( () => {
+
+    console.log(formError)
+    if(Object.keys(formError).length === 0 && isSubmit){
+      signUp(data)
+    }
+    else{
+      setIsSubmit(false)
     }
 
-  }
+  },[formError])
 
   return (
     <div className={styles.signup}>
@@ -103,10 +112,11 @@ const  Signup = () => {
         <p>{formError.userName}</p>
 
         <label className={styles.signupLabel} for="username">Email</label>
-        <input className={styles.signupInput} type="text" placeholder="Email " id="username" 
+        <input className={styles.signupInput} type="text" placeholder="Email " id="email" 
            onChange={(e) => handleChange(e,'email')}
            value={data.email}
         />
+       
         <p>{formError.email}</p>
 
         <label className={styles.signupLabel} for="password">Password</label>

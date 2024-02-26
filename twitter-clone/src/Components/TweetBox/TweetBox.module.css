@@ -20,6 +20,7 @@
     font-size: 20px;
     border: none;
     outline: none;
+
   }
   
   .tweetBox__imageInput {
@@ -40,4 +41,9 @@
     width: 80px;
     margin-left: auto !important;
     
+  }
+
+  ::placeholder {
+    color: black;
+    opacity: 0.7; 
   }
