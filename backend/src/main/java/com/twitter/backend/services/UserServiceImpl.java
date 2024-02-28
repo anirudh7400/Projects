@@ -4,12 +4,15 @@ import com.twitter.backend.exception.EmailNotFoundException;
 import com.twitter.backend.exception.SameUserAlreadyExist;
 import com.twitter.backend.model.User;
 import com.twitter.backend.model.UserData;
+import com.twitter.backend.model.UserTweet;
 import com.twitter.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -50,15 +53,34 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User updateUser(String email, String tweet){
+    public User updateUser(String email, UserTweet userTweet){
 
         User user = userRepository.findByEmail(email);
-        user.getTweet().add(tweet);
+        user.getTweet().add(userTweet.getTweet());
 
         userRepository.save(user);
         return user;
     }
 
+    public User findUserDetails(String email){
+        User user = userRepository.findByEmail(email);
 
+        return user;
+    }
+
+    public User deleteTweet(String email, UserTweet userTweet){
+
+        User user = userRepository.findByEmail(email);
+
+        List<String> temp = user.getTweet();
+
+        if(temp.contains(userTweet.getTweet())){
+            temp.remove(userTweet.getTweet());
+        }
+        user.setTweet(temp);
+        userRepository.save(user);
+
+        return user;
+    }
 
 }

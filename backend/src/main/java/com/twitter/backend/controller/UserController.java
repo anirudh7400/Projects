@@ -4,6 +4,7 @@ import com.twitter.backend.exception.EmailNotFoundException;
 import com.twitter.backend.exception.SameUserAlreadyExist;
 import com.twitter.backend.model.User;
 import com.twitter.backend.model.UserData;
+import com.twitter.backend.model.UserTweet;
 import com.twitter.backend.repository.UserRepository;
 import com.twitter.backend.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,23 @@ public class UserController {
     }
 
     @PutMapping("/updateUser/{email}")
-    public ResponseEntity<User> updateUser(@PathVariable String email,@RequestBody String tweet){
+    public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody UserTweet userTweet){
 
-        User user = userServiceImpl.updateUser(email, tweet);
+        User user = userServiceImpl.updateUser(email, userTweet);
 
         return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/getUserDetails/{email}")
+    public ResponseEntity<User> getUserDetails(@PathVariable String email){
+
+        return new ResponseEntity<>(userServiceImpl.findUserDetails(email),HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/deleteTweet/{email}")
+    public ResponseEntity<User> deleteTweet(@PathVariable String email, @RequestBody UserTweet userTweet){
+
+        return new ResponseEntity<>(userServiceImpl.deleteTweet(email,userTweet),HttpStatus.OK);
     }
 }

@@ -1,14 +1,12 @@
-import React, { useContext, useEffect ,useState } from 'react'
+import React, {useEffect ,useState } from 'react'
 import styles from  './Login.module.css'
 import axios from 'axios' 
 import { useNavigate } from 'react-router'
 import {toast} from 'react-toastify'
-import { Context } from '../../App';
 
 
 const Login = () => {
 
-  const[email,setEmail] = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -29,11 +27,9 @@ const Login = () => {
   const signIn = (userData) => {
       axios.get('http://localhost:8080/getUser/'+ userData.email +'/'+ userData.password).then(
         (resp) => {
-          console.log(resp)
           if(resp.status == 200){
-            setEmail(userData.email)
-            navigate('/home')
-            toast.success("User registered successfully !!")       
+            navigate('/Home' , {state: {email: userData.email}})
+            toast.success("Login successful !!")       
           }
                 
         }

@@ -28,9 +28,10 @@ const  Signup = () => {
       axios.post('http://localhost:8080/addUser',userData).then(
         (resp) => {
           if(resp.status === 200){
+            toast.success("User registered successfully !!")       
             console.log(resp)
             navigate('/login')
-            toast.success("User registered successfully !!")       
+            
           }
            
         }

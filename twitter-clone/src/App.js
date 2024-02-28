@@ -12,7 +12,6 @@ import Profile from './Components/Profile/Profile'
 import More from './Components/More/More'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createContext } from 'react';
 
 import {
   createBrowserRouter,
@@ -20,8 +19,6 @@ import {
 } from "react-router-dom";
 import { useState } from 'react';
 
-
-export const Context = createContext(undefined);
 
 
 
@@ -90,11 +87,11 @@ function App() {
   return (
     <div className="app">
 
-      <Context.Provider value={[email,setEmail]}>
+      
       <ToastContainer position='top-center'/>
       
      <RouterProvider router={router} />
-     </Context.Provider>
+    
     </div>
   );
 }

@@ -11,9 +11,24 @@ import ListIcon from '@mui/icons-material/List';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Button } from '@mui/material';
-
+import { Context } from '../../App';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router'
 
 function Sidebar() {
+
+   const navigate = useNavigate();
+
+
+   const handleClick = (e) =>{
+
+      toast.success("Logout successful !!")
+      navigate('/')
+   }
+
+
+
+
     return (
         <div className = "sidebar">
            <XIcon
@@ -55,7 +70,7 @@ function Sidebar() {
            <Button variant = "outlined" className = "sidebar__tweet">Tweet</Button>
 
            <Button variant='outlined' className='sidebar_logout' 
-           
+            onClick={handleClick}
            >Logout</Button>
         </div>
     )
