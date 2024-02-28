@@ -4,6 +4,7 @@ import styles from './TweetBox.module.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import {Context} from '../Home/Home'
+import {Context1} from '../Feed/Feed'
 
 
 function TweetBox(props) {
@@ -12,8 +13,10 @@ function TweetBox(props) {
     });
 
     const email = useContext(Context)
+    const[dataVar1,setDataVar1] = useContext(Context1)
 
     const handleChange = (e) => {
+        e.preventDefault();
         setTweetData({...tweetData,['tweet']:e.target.value})
       }
 
@@ -21,11 +24,11 @@ function TweetBox(props) {
         e.preventDefault();
         axios.put('http://localhost:8080/updateUser/' + email ,tweetData).then((resp) => {
           if(resp.status == 200){
-            props.getData(tweetData.tweet)
+      setDataVar1(dataVar1+1)
             setTweetData({
                 tweet: ''
             })
-                
+            toast.success("posted successfully !!!")
 
           }
         }).catch((err) => {

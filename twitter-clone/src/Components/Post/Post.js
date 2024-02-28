@@ -8,35 +8,37 @@ import './Post.css'
 import { toast } from 'react-toastify';
 import axios  from 'axios';
 import {Context} from '../Home/Home'    
+import {Context2} from '../Feed/Feed'
+
 
 
 
 
 const Post = ( {username, text, avatar}) =>{
 
+    const[dataVar2,setDataVar2] = useContext(Context2)
+
+
     const[tweetData,setTweetData] = useState({
-        tweet: ''
+        tweet: text
     })
 
     const email = useContext(Context)
+   
 
     const handleClick = (e) => {
 
-        setTweetData({
-            tweet: {text}
-        })
-    
 
-        axios.delete('http://localhost:8080/deleteTweet/' + email , tweetData).then(
+
+        axios.delete('http://localhost:8080/deleteTweet/' + email , {data: tweetData }).then(
             (resp) => {
-                setTweetData({
-                    tweet: ''
-                })
-            
+                
+                setDataVar2(dataVar2+1)
+                console.log(resp)
                 toast.success("post deleted !!")
             }
         ).catch((err) => {
-            toast.error("some error")
+            toast.error("some error in post component")
         })
 
     }

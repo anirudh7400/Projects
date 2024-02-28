@@ -17,7 +17,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { useState } from 'react';
+
 
 
 
@@ -81,8 +81,6 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-
-  const[email,setEmail] = useState('');
 
   return (
     <div className="app">

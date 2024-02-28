@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         if(temp.contains(userTweet.getTweet())){
             temp.remove(userTweet.getTweet());
         }
-        user.setTweet(temp);
+        user.setTweet(new ArrayList<>(temp));
         userRepository.save(user);
 
         return user;
